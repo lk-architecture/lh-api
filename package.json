@@ -1,0 +1,65 @@
+{
+  "name": "lh-api",
+  "version": "1.0.0",
+  "description": "Lambda Hub API server",
+  "main": "lib/server.js",
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "codecov": "codecov",
+    "lint": "eslint src test",
+    "prestart": "npm run build",
+    "start": "NODE_PATH=src node lib/server.js",
+    "start-dynamodb": "NODE_PATH=src babel-node scripts/start-dynamodb.js",
+    "test": "NODE_PATH=src NODE_ENV=test babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive --require babel-polyfill",
+    "dev:server": "NODE_PATH=src nodemon --ignore test --exec node_modules/.bin/babel-node src/server.js | bunyan",
+    "dev:test": "NODE_PATH=src NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require babel-polyfill --watch",
+    "dev": "npm-run-all -p start-dynamodb dev:server dev:test"
+  },
+  "author": "Paolo Scanferla <paolo.scanferla@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lk-architecture/lh-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lk-architecture/lh-api/issues"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.7.7",
+    "babel-core": "^6.7.7",
+    "babel-eslint": "^6.0.3",
+    "babel-plugin-rewire": "^1.0.0-rc-2",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
+    "codecov": "^1.0.1",
+    "dynalite": "^0.19.0",
+    "eslint": "^2.8.0",
+    "eslint-plugin-babel": "^3.2.0",
+    "isparta": "^4.0.0",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.1",
+    "npm-run-all": "^1.7.0",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0",
+    "supertest": "^1.2.0",
+    "supertest-as-promised": "^3.1.0",
+    "validator": "^5.2.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.3.5",
+    "bluebird": "^3.3.5",
+    "body-parser": "^1.15.0",
+    "bunyan": "^1.8.1",
+    "bunyan-cloudwatch": "^2.0.0",
+    "bunyan-request": "^1.2.0",
+    "convexpress": "^1.3.3",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "express-bearer-token": "^2.1.0",
+    "express-jwt": "^3.3.0",
+    "jsonwebtoken": "^5.7.0",
+    "ramda": "^0.21.0"
+  }
+}
