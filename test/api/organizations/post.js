@@ -35,7 +35,7 @@ describe("POST /organizations", () => {
         return request(server)
             .post("/organizations")
             .set("Authorization", `Bearer ${token}`)
-            .send({notName: "notName"})
+            .send({})
             .expect(400)
             .expect(/Validation failed/);
     });
