@@ -104,5 +104,5 @@ export async function handler (req, res) {
         TableName: config.DYNAMODB_LAMBDAS,
         Item: lambda
     });
-    res.status(201).send();
+    res.status(201).send(lambda);
 }
