@@ -15,7 +15,18 @@ export const parameters = [{
             name: {
                 description: "Name of the organization",
                 type: "string",
-                pattern: "^[A-Za-z0-9][\\w-]{2,15}[A-Za-z0-9]$"
+                /*
+                *   The name must follow these rules:
+                *     - starts with a letter or a number
+                *     - ends with a letter or a number
+                *     - only contains letters, numbers, dashes and underscores
+                *     - dashes and underscores are not adjacent
+                *     - dashes and underscores are not consecutively repeated twice or more
+                *   Example:
+                *     - valid names: "name", "1name", "n-a-m-e", "n_a_m_e"
+                *     - invalid names: "_name", "name-", "na--me", "na-_me", "n/a/m/e"
+                */
+                pattern: "^[A-Za-z0-9](?=[\\w-]{2,15}[A-Za-z0-9]$)(?!.*[-_]{2,}.*)"
             }
         },
         additionalProperties: false,
