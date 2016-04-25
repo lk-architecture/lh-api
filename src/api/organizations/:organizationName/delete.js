@@ -46,5 +46,6 @@ export async function handler (req, res) {
         TableName: config.DYNAMODB_ORGANIZATIONS,
         Key: {name: req.params.organizationName}
     });
+    // TODO delete all lambdas for the organization
     res.status(204).send();
 }
