@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import bunyanRequest from "bunyan-request";
 import cors from "cors";
 import express from "express";

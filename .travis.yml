@@ -3,7 +3,14 @@ language: node_js
 node_js:
   - 5
 
+before_script:
+  - npm run start-dynamodb &
+  # Give dynamodb some time to startup
+  - sleep 5
+
 script:
   - npm run lint
   - npm run coverage
+
+after_success:
   - npm run coveralls
