@@ -37,6 +37,13 @@ describe("GET /organizations", () => {
         ));
     });
 
+    it("200 on success", () => {
+        return request(server)
+            .get("/organizations")
+            .set("Authorization", `Bearer ${token}`)
+            .expect(200);
+    });
+
     it("returns the user's organizations", async () => {
         const {body: organizations} = await request(server)
             .get("/organizations")
