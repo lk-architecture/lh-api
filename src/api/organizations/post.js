@@ -62,5 +62,5 @@ export async function handler (req, res) {
         TableName: config.DYNAMODB_ORGANIZATIONS,
         Item: organization
     });
-    res.status(201).send();
+    res.status(201).send(organization);
 }
