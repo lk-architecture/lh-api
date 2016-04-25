@@ -1,10 +1,10 @@
 import * as config from "config";
 import dynamodb from "services/dynamodb";
 
-export const path = "/l/:organizationName";
+export const path = "/organizations/:organizationName";
 export const method = "get";
-export const description = "List lambdas for the given organization";
-export const tags = ["lambdas"];
+export const description = "Get organization by name";
+export const tags = ["organizations"];
 export const parameters = [{
     name: "organizationName",
     in: "path",
@@ -13,7 +13,7 @@ export const parameters = [{
 }];
 export const responses = {
     "200": {
-        description: "Lambda list"
+        description: "Organization"
     },
     "404": {
         description: "Organization not found"
@@ -31,13 +31,5 @@ export async function handler (req, res) {
         });
         return;
     }
-    // Retrieve lambdas by organizations
-    const {Items: lambdas} = await dynamodb.queryAsync({
-        TableName: config.DYNAMODB_LAMBDAS,
-        KeyConditionExpression: "organizationName = :organizationName",
-        ExpressionAttributeValues: {
-            ":organizationName": req.params.organizationName
-        }
-    });
-    res.status(200).send(lambdas);
+    res.status(200).send(organization);
 }

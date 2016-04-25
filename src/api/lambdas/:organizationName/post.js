@@ -1,7 +1,7 @@
 import * as config from "config";
 import dynamodb from "services/dynamodb";
 
-export const path = "/l/:organizationName";
+export const path = "/lambdas/:organizationName";
 export const method = "post";
 export const description = "Create a new lambda for an organization";
 export const tags = ["lambdas"];

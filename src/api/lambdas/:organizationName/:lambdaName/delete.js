@@ -1,7 +1,7 @@
 import * as config from "config";
 import dynamodb from "services/dynamodb";
 
-export const path = "/l/:organizationName/:lambdaName";
+export const path = "/lambdas/:organizationName/:lambdaName";
 export const method = "delete";
 export const description = "Delete lambda by organization and name";
 export const tags = ["lambdas"];

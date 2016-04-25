@@ -1,7 +1,7 @@
 import * as config from "config";
 import dynamodb from "services/dynamodb";
 
-export const path = "/o";
+export const path = "/organizations";
 export const method = "get";
 export const description = "List organizations for the given user";
 export const tags = ["organizations"];

@@ -1,7 +1,7 @@
 import * as config from "config";
 import dynamodb from "services/dynamodb";
 
-export const path = "/o/:organizationName";
+export const path = "/organizations/:organizationName";
 export const method = "delete";
 export const description = "Delete organization by name";
 export const tags = ["organizations"];

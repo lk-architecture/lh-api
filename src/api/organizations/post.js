@@ -1,7 +1,7 @@
 import * as config from "config";
 import dynamodb from "services/dynamodb";
 
-export const path = "/o";
+export const path = "/organizations";
 export const method = "post";
 export const description = "Create a new organization";
 export const tags = ["organizations"];
