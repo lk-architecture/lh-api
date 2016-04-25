@@ -42,7 +42,6 @@ describe("POST /lambdas/:organizationName", () => {
     it("400 on bad request [CASE 0: no body]", () => {
         return request(server)
             .post("/lambdas/organizationName")
-            .set("Authorization", `Bearer ${token}`)
             .expect(400)
             .expect(/Validation failed/);
     });
@@ -54,7 +53,6 @@ describe("POST /lambdas/:organizationName", () => {
         return map(invalidBodies, body => (
             request(server)
                 .post("/lambdas/organizationName")
-                .set("Authorization", `Bearer ${token}`)
                 .send(body)
                 .expect(400)
                 .expect(/Validation failed/)
@@ -75,7 +73,6 @@ describe("POST /lambdas/:organizationName", () => {
         return map(invalidNames, name => (
             request(server)
                 .post("/lambdas/organizationName")
-                .set("Authorization", `Bearer ${token}`)
                 .send({name: name, sourceRepository: "gh/org/repo"})
                 .expect(400)
                 .expect(/Validation failed/)
@@ -91,7 +88,6 @@ describe("POST /lambdas/:organizationName", () => {
         return map(invalidSourceRepositories, sourceRepository => (
             request(server)
                 .post("/lambdas/organizationName")
-                .set("Authorization", `Bearer ${token}`)
                 .send({name: "lambdaName", sourceRepository: sourceRepository})
                 .expect(400)
                 .expect(/Validation failed/)
@@ -101,10 +97,17 @@ describe("POST /lambdas/:organizationName", () => {
     it("400 on bad request [CASE 4: invalid body - disallowed additional properties]", () => {
         return request(server)
             .post("/lambdas/organizationName")
-            .set("Authorization", `Bearer ${token}`)
             .send({name: "lambdaName", sourceRepository: "gh/org/repo", notName: "notName"})
             .expect(400)
             .expect(/Validation failed/);
+    });
+
+    it("401 on missing authentication", () => {
+        return request(server)
+            .post("/lambdas/organizationName")
+            .send({name: "lambdaName", sourceRepository: "gh/org/repo"})
+            .expect(401)
+            .expect(/Authentication required to perform this operation/);
     });
 
     it("403 on organization not belonging to the user", () => {

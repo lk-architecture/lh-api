@@ -31,6 +31,13 @@ describe("DELETE /organizations/:organizationName", () => {
         });
     });
 
+    it("401 on missing authentication", () => {
+        return request(server)
+            .delete("/organizations/organizationName")
+            .expect(401)
+            .expect(/Authentication required to perform this operation/);
+    });
+
     it("404 on organization not found", () => {
         return request(server)
             .delete("/organizations/nonExistingOrganizationName")

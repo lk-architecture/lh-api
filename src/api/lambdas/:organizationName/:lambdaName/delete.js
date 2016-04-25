@@ -1,4 +1,5 @@
 import * as config from "config";
+import * as requireAuthentication from "middleware/require-authentication";
 import dynamodb from "services/dynamodb";
 
 export const path = "/lambdas/:organizationName/:lambdaName";
@@ -23,6 +24,7 @@ export const responses = {
     "204": {
         description: "Organization deleted"
     },
+    ...requireAuthentication.responses,
     "403": {
         description: "Not allowed to delete lambdas for organization"
     },
@@ -30,6 +32,7 @@ export const responses = {
         description: "Lambda or organization not found"
     }
 };
+export const middleware = [requireAuthentication.middleware];
 export async function handler (req, res) {
     const {Item: organization} = await dynamodb.getAsync({
         TableName: config.DYNAMODB_ORGANIZATIONS,
@@ -43,7 +46,7 @@ export async function handler (req, res) {
         return;
     }
     // Fail if the organization doesn't belong to the user
-    if (organization.ownerId !== req.user.sub) {
+    if (organization.ownerId !== req.jwt.sub) {
         res.status(403).send({
             message: `Not allowed to delete lambdas for organization ${req.params.organizationName}`
         });

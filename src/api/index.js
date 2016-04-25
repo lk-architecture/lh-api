@@ -1,7 +1,7 @@
 import convexpress from "convexpress";
 
 import * as config from "config";
-import authenticate from "middleware/authenticate";
+import authenticateJwt from "middleware/authenticate-jwt";
 
 const options = {
     info: {
@@ -12,7 +12,7 @@ const options = {
 };
 export default convexpress(options)
     .serveSwagger()
-    .use(authenticate())
+    .use(authenticateJwt())
     .convroute(require("api/organizations/get"))
     .convroute(require("api/organizations/post"))
     .convroute(require("api/organizations/:organizationName/get"))

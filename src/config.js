@@ -18,6 +18,7 @@ export const AWS_CLOUDWATCH_GROUP = "lh-api";
 export const AWS_CLOUDWATCH_STREAM = SERVER_ID;
 export const AWS_CLOUDWATCH_REGION = process.env.AWS_CLOUDWATCH_REGION;
 
+export const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN || "AUTH0_DOMAIN";
 export const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID || "AUTH0_CLIENT_ID";
 export const AUTH0_CLIENT_SECRET = new Buffer(
     process.env.AUTH0_CLIENT_SECRET || new Buffer("AUTH0_CLIENT_SECRET").toString("base64"),

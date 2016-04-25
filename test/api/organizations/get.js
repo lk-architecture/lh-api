@@ -37,6 +37,13 @@ describe("GET /organizations", () => {
         ));
     });
 
+    it("401 on missing authentication", () => {
+        return request(server)
+            .get("/organizations")
+            .expect(401)
+            .expect(/Authentication required to perform this operation/);
+    });
+
     it("200 and returns the user's organizations", async () => {
         const {body: organizations} = await request(server)
             .get("/organizations")

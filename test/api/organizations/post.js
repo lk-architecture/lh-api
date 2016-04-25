@@ -26,7 +26,6 @@ describe("POST /organizations", () => {
     it("400 on bad request [CASE 0: no body]", () => {
         return request(server)
             .post("/organizations")
-            .set("Authorization", `Bearer ${token}`)
             .expect(400)
             .expect(/Validation failed/);
     });
@@ -34,7 +33,6 @@ describe("POST /organizations", () => {
     it("400 on bad request [CASE 1: invalid body - missing name property]", () => {
         return request(server)
             .post("/organizations")
-            .set("Authorization", `Bearer ${token}`)
             .send({})
             .expect(400)
             .expect(/Validation failed/);
@@ -51,7 +49,6 @@ describe("POST /organizations", () => {
         return map(invalidNames, name => (
             request(server)
                 .post("/organizations")
-                .set("Authorization", `Bearer ${token}`)
                 .send({name})
                 .expect(400)
                 .expect(/Validation failed/)
@@ -61,10 +58,17 @@ describe("POST /organizations", () => {
     it("400 on bad request [CASE 3: invalid body - disallowed additional properties]", () => {
         return request(server)
             .post("/organizations")
-            .set("Authorization", `Bearer ${token}`)
             .send({name: "organizationName", notName: "notName"})
             .expect(400)
             .expect(/Validation failed/);
+    });
+
+    it("401 on missing authentication", () => {
+        return request(server)
+            .post("/organizations")
+            .send({name: "organizationName"})
+            .expect(401)
+            .expect(/Authentication required to perform this operation/);
     });
 
     it("409 on existing organization", async () => {

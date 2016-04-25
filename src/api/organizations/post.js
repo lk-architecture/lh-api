@@ -1,4 +1,5 @@
 import * as config from "config";
+import * as requireAuthentication from "middleware/require-authentication";
 import dynamodb from "services/dynamodb";
 
 export const path = "/organizations";
@@ -37,10 +38,12 @@ export const responses = {
     "201": {
         description: "Organization created"
     },
+    ...requireAuthentication.responses,
     "409": {
         description: "Organization with same name already exists"
     }
 };
+export const middleware = [requireAuthentication.middleware];
 export async function handler (req, res) {
     const {Item: existingOrganization} = await dynamodb.getAsync({
         TableName: config.DYNAMODB_ORGANIZATIONS,
@@ -56,7 +59,7 @@ export async function handler (req, res) {
     // Create the organization
     const organization = {
         name: req.body.name,
-        ownerId: req.user.sub
+        ownerId: req.jwt.sub
     };
     await dynamodb.putAsync({
         TableName: config.DYNAMODB_ORGANIZATIONS,
