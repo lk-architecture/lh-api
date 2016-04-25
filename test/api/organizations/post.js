@@ -95,12 +95,16 @@ describe("POST /organizations", () => {
         });
     });
 
-    it("201 on successful write", async () => {
+    it("on successful write, 201 and returns the created organization", async () => {
         await request(server)
             .post("/organizations")
             .set("Authorization", `Bearer ${token}`)
             .send({name: "organizationName"})
-            .expect(201);
+            .expect(201)
+            .expect({
+                name: "organizationName",
+                ownerId: "userId"
+            });
         // Check that the write was successful
         const {Item: organization} = await dynamodb.getAsync({
             TableName: config.DYNAMODB_ORGANIZATIONS,
@@ -110,18 +114,6 @@ describe("POST /organizations", () => {
             name: "organizationName",
             ownerId: "userId"
         });
-    });
-
-    it("returns the created organization", () => {
-        return request(server)
-            .post("/organizations")
-            .set("Authorization", `Bearer ${token}`)
-            .send({name: "organizationName"})
-            .expect(201)
-            .expect({
-                name: "organizationName",
-                ownerId: "userId"
-            });
     });
 
 });

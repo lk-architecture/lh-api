@@ -38,14 +38,7 @@ describe("GET /organizations/:organizationName", () => {
             .expect(/Organization nonExistingOrganizationName not found/);
     });
 
-    it("200 on success", () => {
-        return request(server)
-            .get("/organizations/organizationName")
-            .set("Authorization", `Bearer ${token}`)
-            .expect(200);
-    });
-
-    it("returns the requested organization", () => {
+    it("200 and returns the requested organization", () => {
         return request(server)
             .get("/organizations/organizationName")
             .set("Authorization", `Bearer ${token}`)
