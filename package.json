@@ -14,7 +14,7 @@
     "test": "NODE_PATH=src NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require babel-polyfill",
     "dev:test": "npm run test -- --watch",
     "dev:server": "NODE_PATH=src nodemon --ignore test --exec node_modules/.bin/babel-node src/server.js | bunyan",
-    "dev": "npm-run-all -p start-dynamodb dev:server dev:test"
+    "dev": "source .env && npm-run-all -p start-dynamodb dev:server dev:test"
   },
   "author": "Paolo Scanferla <paolo.scanferla@gmail.com>",
   "license": "MIT",
@@ -49,6 +49,7 @@
     "validator": "^5.2.0"
   },
   "dependencies": {
+    "auth0": "^2.1.0",
     "aws-sdk": "^2.3.5",
     "babel-polyfill": "^6.7.4",
     "bluebird": "^3.3.5",
